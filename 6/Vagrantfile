@@ -1,0 +1,17 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/bionic64"
+  config.ssh.insert_key = false
+  config.vm.synced_folder "c:/vagrant/3/files", "/var/www"
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo add-apt-repository universe
+    sudo apt update
+    sudo apt install software-properties-common -y
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo apt install python3.8 -y
+    sudo apt install python3-pip -y
+    sudo apt-get install python-dev -y
+    sudo apt install python3-django -y
+    pip install psycopg2
+  SHELL
+end
